@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.author        = 'Emil'
   spec.email         = 'emil@appunite.com'
 
-  spec.summary       = 'Upload artifacts to AppUnite's auto-close service'
+  spec.summary       = "Upload artifacts to AppUnite's auto-close service"
   spec.homepage      = "https://github.com/emilwojtaszek/fastlane-plugin-au_auto_close_upload"
   spec.license       = "MIT"
 
