@@ -10,13 +10,13 @@ module Fastlane
         UI.message("Archiving files...")
 
         # ipa zip
-        ipa = File.basename(params[:ipa_path])
-        command = "tar -zcvf ipa.tgz #{ipa}"
+        # ipa = File.basename(params[:ipa_path])
+        command = "tar -zcvf ipa.tgz #{params[:ipa_path]}"
         Fastlane::Actions.sh command, log: true
 
         # dzym zip
-        dsym = File.basename(params[:dsym_path])
-        command = "tar -zcvf dsym.tgz #{dsym}"
+        # dsym = File.basename(params[:dsym_path])
+        command = "tar -zcvf dsym.tgz #{params[:dsym_path]}"
         Fastlane::Actions.sh command, log: true
 
         # uploading
