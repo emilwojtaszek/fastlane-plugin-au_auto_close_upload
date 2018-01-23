@@ -12,12 +12,12 @@ module Fastlane
         # ipa zip
         # ipa = File.basename(params[:ipa_path])
         command = "tar -zcvf ipa.tgz #{params[:ipa_path]}"
-        Fastlane::Actions.sh command, log: true
+        Fastlane::Actions.sh command, log: :verbose
 
         # dzym zip
         # dsym = File.basename(params[:dsym_path])
         command = "tar -zcvf dsym.tgz #{params[:dsym_path]}"
-        Fastlane::Actions.sh command, log: true
+        Fastlane::Actions.sh command, log: :verbose
 
         # uploading
         UI.message("Uploading artifacts to auto-close service...")
@@ -26,7 +26,7 @@ module Fastlane
         command = "python tools/upload.py --token #{params[:token]} "
         command << "--final " if params[:final]
         command << "--build-name #{params[:build_name]} ipa.tgz dsym.tgz "
-        Fastlane::Actions.sh command, log: true
+        Fastlane::Actions.sh command, log: :verbose
       end
 
       def self.description
@@ -61,6 +61,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :build_name,
                                        description: "Build name unique description",
                                        default_value: build_name.shellescape,
+                                       optional: false),
+
+          FastlaneCore::ConfigItem.new(key: :verbose,
+                                       description: "User verbose mode",
+                                       default_value: false,
                                        optional: false),
 
           FastlaneCore::ConfigItem.new(key: :ipa_path,
