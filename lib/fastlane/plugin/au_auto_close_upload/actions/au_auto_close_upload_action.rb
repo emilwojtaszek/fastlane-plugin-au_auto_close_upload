@@ -26,6 +26,19 @@ module Fastlane
         command = "python tools/upload.py --token #{params[:token]} "
         command << "--final " if params[:final]
         command << "--build-name #{params[:build_name]} ipa.tgz dsym.tgz "
+        
+        if params.has_key?(:json_output_file)
+          command << "--json-output-file #{params[:json_output_file]}"
+        end
+
+        if params.has_key?(:base_url)
+          command << "--base-url #{params[:base_url]}"
+        end
+
+        if params[:auto_close_tasks] == "true"
+          command << "--auto-close"
+        end 
+
         Fastlane::Actions.sh command, log: :verbose
       end
 
@@ -92,10 +105,23 @@ module Fastlane
                                        optional: false),
 
           FastlaneCore::ConfigItem.new(key: :final,
-                                       description: "Mark this artifacts and final",
+                                       description: "Mark this artifacts as final",
                                        default_value: true,
                                        optional: true),
-        ]
+
+          FastlaneCore::ConfigItem.new(key: :json_output_file,
+                                       description: "File where response from auto close will be written",
+                                       optional: true),
+
+          FastlaneCore::ConfigItem.new(key: :base_url,
+                                       description: "Base url for uploading binaries",
+                                       optional: true),
+
+          FastlaneCore::ConfigItem.new(key: :auto_close_tasks,
+                                       description: "Boolean flag for auto-close to automatically close tasks",
+                                       default_value: false,
+                                       optional: true)
+       ]
       end
 
       def self.authors
